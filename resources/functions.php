@@ -61,7 +61,7 @@ function fetch_array($result)
 			<div class="thumbnail">
 			<!-- actual image tag -->
 			<a href="item.php?id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
-			<!-- future image tag -->
+			<!-- future image tag SUPER IMPORTANT DONT SKIP IT !!!!-->
 			<!-- <img src="/resources/...?add={$row['product_id']}" alt=""> -->
 			
 				<div class="caption">
