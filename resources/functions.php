@@ -1,19 +1,15 @@
 <?php
-
 //helper function
-
 function redirect($location)
 {
 	header("LOCATION: $location");
 }
-
 function query($sql)
 {
 	global $connection;
 	
 	return mysqli_query($connection,$sql);
 }
-
 function confirm($result)
 {
 	global $connection;
@@ -23,30 +19,18 @@ function confirm($result)
 		die("QUERY FAILED" . mysqli_error($connection));
 	}
 }
-
 function escape_string($string)
 {
 	global $connection;
 	
 	return mysqli_real_escape_string($connection,$string);
 }
-
-
 function fetch_array($result)
 {
 	return mysqli_fetch_array($result);
 }
-
-
-
-
-
 /******************************** FRONT END FUNCTION **************************/
-
-
-
 //get products 
-
  function get_products()
  {
 	$result = query("SELECT * FROM products");
@@ -56,7 +40,6 @@ function fetch_array($result)
 	while($row = fetch_array($result))
 	{
 		$product = <<<DELIMETER
-
 		<div class="col-sm-4 col-lg-4 col-md-4">
 			<div class="thumbnail">
 			<!-- actual image tag -->
@@ -72,14 +55,11 @@ function fetch_array($result)
 				</div>
 			</div>
 		</div>
-
 DELIMETER;
-
 		echo $product;
 		
 	}	
  }
-
  
  
  
@@ -96,25 +76,45 @@ DELIMETER;
 		$categories_links = <<<DELIMETER
 		
 		<a href='category.php?id={$row['cat_id']}' class='list-group-item'>{$row['cat_title']}</a>
-
 DELIMETER;
-
 echo $categories_links;
 		
 	}
  
  }
-
-
+ 
+ 
+ // get products by category
+ 
+ function get_products_in_cat_page()
+ {
+	$query = query("SELECT * FROM products where product_category_id = ". escape_string($_GET['id']) ." ");
+	
+	confirm($query);
+	
+	while($row = fetch_array($query))
+	{
+		$product = <<<DELIMETER
+		     <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
+                    <div class="caption">
+						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to cart</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default"> More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+DELIMETER;
+		echo $product;
+		
+	}	
+ }
+ 
  
  
  
  /******************************** BACK END FUNCTION **************************/
-
-
-
-
-
-
-
 ?>
