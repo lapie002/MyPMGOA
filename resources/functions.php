@@ -113,6 +113,54 @@ DELIMETER;
 	}	
  }
  
+// get category title
+ 
+ function get_category_title()
+ {
+	$query = query("SELECT cat_title FROM categories WHERE cat_id = ". escape_string($_GET['id']) ." ");
+	
+	confirm($query);
+	
+	while($row = fetch_array($query))
+	{
+		$categories_title = <<<DELIMETER
+		
+		<h3>{$row['cat_title']}</h3>
+DELIMETER;
+echo $categories_title;
+		
+	}
+ 
+ }
+ 
+ // shop
+ 
+ function get_products_in_shop_page()
+ {
+	$query = query("SELECT * FROM products");
+	
+	confirm($query);
+	
+	while($row = fetch_array($query))
+	{
+		$product = <<<DELIMETER
+		     <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
+                    <div class="caption">
+						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to cart</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default"> More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+DELIMETER;
+		echo $product;
+		
+	}	
+ }
  
  
  
