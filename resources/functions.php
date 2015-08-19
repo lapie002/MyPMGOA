@@ -1,15 +1,18 @@
 <?php
-//helper function
+/******************************** helper function **************************/
+
 function redirect($location)
 {
 	header("LOCATION: $location");
 }
+
 function query($sql)
 {
 	global $connection;
 	
 	return mysqli_query($connection,$sql);
 }
+
 function confirm($result)
 {
 	global $connection;
@@ -19,18 +22,43 @@ function confirm($result)
 		die("QUERY FAILED" . mysqli_error($connection));
 	}
 }
+
 function escape_string($string)
 {
 	global $connection;
 	
 	return mysqli_real_escape_string($connection,$string);
 }
+
 function fetch_array($result)
 {
 	return mysqli_fetch_array($result);
 }
+
+function set_message($msg)
+{
+	if(!empty($msg))
+	{
+		$_SESSION['message'] = $msg; 
+	}
+	else
+	{
+		$msg = "";
+	}
+}
+
+function display_message()
+{
+	if(isset($_SESSION['message']))
+	{
+		echo $_SESSION['message'];
+		unset($_SESSION['message']);
+	}
+}
+
 /******************************** FRONT END FUNCTION **************************/
 //get products 
+
  function get_products()
  {
 	$result = query("SELECT * FROM products");
@@ -162,7 +190,30 @@ DELIMETER;
 	}	
  }
  
+ // function login
  
+ function login_user()
+ {
+	if(isset($_POST['submit']))
+	{
+		$username = escape_string($_POST['username']);
+		$password = escape_string($_POST['password']);
+		
+		$query = query("SELECT * FROM users where username = '{$username}' AND  password='{$password}' ");
+		confirm($query);
+		
+		if(mysqli_num_rows($query) == 0)
+		{
+			set_message("There was a problem with your request. Please re-enter your login information and password !");
+			redirect("login.php");
+		}
+		else
+		{
+			redirect("admin");
+		}
+		
+	}
+ }
  
  /******************************** BACK END FUNCTION **************************/
 ?>
