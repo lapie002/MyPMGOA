@@ -22,8 +22,8 @@
 
                 <div class="form-group">
 				  <button type="reset" class="btn btn-default">Reset</button>
-				  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                  <input type="submit" name="submit" class="btn btn-primary">
+				  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                  <!-- <input type="submit" name="submit" class="btn btn-primary"> -->
                 </div>
             </form>
 			

@@ -56,6 +56,7 @@ function display_message()
 	}
 }
 
+
 /******************************** FRONT END FUNCTION **************************/
 //get products 
 
@@ -214,6 +215,41 @@ DELIMETER;
 		
 	}
  }
+ 
+ // Customer can send Message
+// Configuration option.
+// Enter the email address that you want to emails to be sent to.
+// Example $address = "joe.doe@yourdomain.com";
+//$address = "example@example.net";
+
+ function send_message()
+ {
+	if(isset($_POST['submit']))
+	{
+
+		$to      = "lapierre.bruno@gmail.com";
+		$from_name    = $_POST['name'];
+		$email   = $_POST['email'];
+		$subject = $_POST['subject'];
+		$message = $_POST['message'];
+
+		$headers = "from: {$from_name} {$email}";
+
+		$result = mail($to,$subject,$message,$headers);
+
+		if(!$result)
+		{
+			set_message("Error, please fill up the contact form again.");
+		}
+		else
+		{
+			set_message("Email Sent Successfully.");
+		}
+	}
+ }
+ 
+ 
+ 
  
  /******************************** BACK END FUNCTION **************************/
 ?>
