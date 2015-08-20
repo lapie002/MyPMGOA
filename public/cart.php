@@ -64,8 +64,7 @@
                 <td>&#36;{$row['product_price']}</td>
                 <td>3</td>
                 <td>2</td>
-				<td><a href="cart.php?remove=1">Remove</a></td>
-				<td><a href="cart.php?delete=1">Delete</a></td>
+				<td><a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>       <a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>         <a class='btn btn-success' href="cart.php?add=1"><span class='glyphicon glyphicon-plus'></span></a></td>
             </tr>		
 DELIMETER;
 
