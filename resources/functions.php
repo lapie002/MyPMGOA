@@ -163,7 +163,6 @@ echo $categories_title;
  }
  
  // shop
-
  function get_products_in_shop_page()
  {
 	$query = query("SELECT * FROM products");
@@ -180,7 +179,7 @@ echo $categories_title;
 						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to cart</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default"> More Info</a>
+							 <a href="cart.php?add={$row['product_id']}" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
