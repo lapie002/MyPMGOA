@@ -23,6 +23,7 @@
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_cart">
 <input type="hidden" name="business" value="bruno.lapierre@etu.umontpellier.fr">
+<input type="hidden" name="currency_code" value="US">
     <table class="table table-striped">
         <thead>
           <tr>
@@ -37,7 +38,7 @@
 		<?php cartDisplayItem(); ?>
         </tbody>
     </table>
-	<input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+	<input type="image" name="upload" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
 	<!-- <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="right" alt="PayPal - The safer, easier way to pay online"> -->
 </form>
 

@@ -27,7 +27,7 @@
 		
 	}
 	
-	//method to remove item selected in shopping cart
+	//method to remove ONE item selected in shopping cart
 	if(isset($_GET['remove']))
 	{
 		$_SESSION['product_' . $_GET['remove']] --;
@@ -44,7 +44,7 @@
 		}
 	}
 	
-	//method to delete item selected in shopping cart
+	//method to delete ALL item selected in shopping cart
 	if(isset($_GET['delete']))
 	{
 		$_SESSION['product_' . $_GET['delete']] = '0';
@@ -95,10 +95,10 @@
 							<td><a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>       <a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>         <a class='btn btn-success' href="cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a></td>
 						</tr>
 
-						<input type="hidden" name="item_name_{$item_name}" value="hat">
-						<input type="hidden" name="item_number_{$item_number}" value="123">
-						<input type="hidden" name="amount_{$amount}" value="15.00">
-						<input type="hidden" name="quantity_{$quantity}" value="350">
+						<input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}">
+						<input type="hidden" name="item_number_{$item_number}" value="{$row['product_id']}">
+						<input type="hidden" name="amount_{$amount}" value="{$row['product_price']}">
+						<input type="hidden" name="quantity_{$quantity}" value="{$value}">
 						
 DELIMETER;
 
