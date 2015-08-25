@@ -119,5 +119,24 @@ DELIMETER;
 		}
 		
 	}
+	
+	
+function show_paypal()
+{
+
+	IF(!empty($_SESSION['item_quantity']))
+	{
+
+		$paypal_button = <<<DELIMETER
+		
+		<input type="image" name="upload" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" align="right" alt="PayPal - The safer, easier way to pay online">
+
+DELIMETER;
+
+		return $paypal_button;
+	
+	}
+
+}
 
  ?>
