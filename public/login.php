@@ -12,7 +12,9 @@
 			
         <div class="col-sm-4 col-sm-offset-5">         
             <form class="" action="" method="post" enctype="multipart/form-data">
+			
 				<?php login_user(); ?>
+				
                 <div class="form-group"><label for="">
                     username<input type="text" name="username" class="form-control"></label>
                 </div>
@@ -22,8 +24,8 @@
 
                 <div class="form-group">
 				  <button type="reset" class="btn btn-default">Reset</button>
-				  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                  <!-- <input type="submit" name="submit" class="btn btn-primary"> -->
+				  <!-- <button type="submit" name="submit" class="btn btn-primary">Submit</button> -->
+                  <input type="submit" name="submit" class="btn btn-primary"> 
                 </div>
             </form>
 			

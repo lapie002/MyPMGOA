@@ -80,7 +80,7 @@ function display_message()
 					<h4 class="pull-right">&#36;{$row['product_price']}</h4>
 					<h4><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h4>
 					<p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-					<a class="btn btn-primary" target="_blank" href="cart.php?add={$row['product_id']}">Add to cart</a>
+					<a class="btn btn-primary" target="_blank" href="../resources/cart.php?add={$row['product_id']}">Add to cart</a>
 				</div>
 			</div>
 		</div>
@@ -129,9 +129,9 @@ echo $categories_links;
                     <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
                     <div class="caption">
 						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>{$row['short_desc']}</p>
                         <p>
-                            <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to cart</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default"> More Info</a>
+                            <a class="btn btn-primary" target="_blank" href="../resources/cart.php?add={$row['product_id']}">Add to cart</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default"> More Info</a>
                         </p>
                     </div>
                 </div>
@@ -177,9 +177,9 @@ echo $categories_title;
                     <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
                     <div class="caption">
 						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>{$row['short_desc']}</p>
                         <p>
-							 <a href="cart.php?add={$row['product_id']}" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
+							 <a href="../resources/cart.php?add={$row['product_id']}" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
@@ -209,13 +209,14 @@ DELIMETER;
 		}
 		else
 		{
+			$_SESSION['username'] = $username;
 			redirect("admin");
 		}
 		
 	}
  }
  
- // Customer can send Message
+// Customer can send Message
 // Configuration option.
 // Enter the email address that you want to emails to be sent to.
 // Example $address = "joe.doe@yourdomain.com";
