@@ -143,39 +143,71 @@ DELIMETER;
 //method for the thank_you.php page
 	function report()
 	{
-		$total = 0;
-		$item_quantity = 0;
 		
-
-	 
-		foreach($_SESSION as $name => $value)
+		if(isset($_GET['tx']))
 		{
+			$amount = $_GET['amt'];
+			$currency = $_GET['cc'];
+			$transaction = $_GET['tx'];
+			$status = $_GET['st'];
+			
+			$total = 0;
+			$item_quantity = 0;
 		
-			if($value>0)
+		
+			$send_order = query("INSERT INTO orders (order_amount, order_transaction, order_status, order_currency) VALUES('{$amount}','{$transaction}','{$status}','{$currency}') ");
+			$last_id = last_id();
+			confirm($send_order);
+	
+	
+ 
+			foreach($_SESSION as $name => $value)
 			{
-		
-				if(substr($name, 0, 8) == "product_")
+			
+				if($value>0)
 				{
-					$length = strlen($name - 8);
-					$id = substr($name, 8, $length);
-					
-					$query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
-					confirm($query);
-		
-					while($row = fetch_array($query))
+			
+					if(substr($name, 0, 8) == "product_")
 					{
-						$sub = $row['product_price'] * $value;
-						$item_quantity += $value;
+						$length = strlen($name - 8);
+						$id = substr($name, 8, $length);
 						
-						//query
+						
+						
+						$send_order = query("INSERT INTO orders (order_amount, order_transaction, order_status, order_currency) VALUES('{$amount}','{$transaction}','{$status}','{$currency}') ");
+						$last_id = last_id();
+						confirm($send_order);
+						
+						
+						$query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
+						confirm($query);
+			
+						while($row = fetch_array($query))
+						{
+							$product_price = $row['product_price'];
+							$product_title = $row['product_title'];
+							$sub = $row['product_price'] * $value;
+							$item_quantity += $value;
+							
+							
+							//query
+							$insert_report = query("INSERT INTO reports (product_id, order_id, product_price, product_title, product_quantity) VALUES('{$id}','{$last_id}','{$product_price}','{$product_title}','{$value}')");
+							confirm($insert_report);
+						}
+						
+						$total += $sub;
+						$item_quantity;
 					}
-					
-					$total += $sub;
-					echo $item_quantity;
 				}
 			}
+			
+			//session_destroy();
 		}
 		
+		else
+		{
+			redirect("index.php");
+		}
 	}
 
 

@@ -56,6 +56,12 @@ function display_message()
 	}
 }
 
+function last_id()
+{
+	global $connection;
+
+	return mysqli_insert_id($connection);
+} 
 
 /******************************** FRONT END FUNCTION **************************/
 //get products 
