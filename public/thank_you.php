@@ -12,10 +12,21 @@
 		$transaction = $_GET['tx'];
 		$status = $_GET['st'];
 		
+		
+		
+		
+		
+		
 		$query = query("INSERT INTO orders (order_amount, order_transaction, order_status, order_currency) VALUES('{$amount}','{$transaction}','{$status}','{$currency}') ");
 		confirm($query);
+		
+		report();
+		
+		/* destroy the current session to erase customer previous purchase */
+		//session_destroy();
 
 	}
+	
 	else
 	{
 		redirect("index.php");
