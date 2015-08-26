@@ -259,6 +259,7 @@ DELIMETER;
  
  /******************************** BACK END FUNCTION **************************/
  
+ //function to display orders in the admin panel 
  function display_orders()
  {
 	 $query = query("SELECT * FROM orders");
@@ -285,9 +286,41 @@ DELIMETER;
  }
  
  
+ /*******************************Admin products.php*****************/
+ 
+ function get_products_in_admin()
+ {
+	$result = query("SELECT * FROM products");
+	confirm($result);
+	
+	while($row = fetch_array($result))
+	{
+		$product_in_admin_page = <<<DELIMETER
+		  <tr>
+		    <td>{$row['product_id']}</td>
+            <td>{$row['product_title']} <br>
+              <a href="index.php?edit_product&id={$row['product_id']}"><img src="{$row['product_image_small']}" alt=""></a>
+            </td>
+            <td>{$row['product_category_id']}</td>
+            <td>{$row['product_price']}</td>
+			<td>{$row['product_quantity']}</td>
+			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_product.php?id={$row['product_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+		 </tr>
+DELIMETER;
+		echo $product_in_admin_page;
+		
+	}	
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ }
  
  
  

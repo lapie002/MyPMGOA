@@ -60,6 +60,10 @@ redirect("../../index.php");
 					{
 							include(TEMPLATE_BACK . DS . "/categories.php");
 					}
+					if(isset($_GET['edit_product']))
+					{
+							include(TEMPLATE_BACK . DS . "/edit_product.php");
+					}
 					
 				?>
 				
