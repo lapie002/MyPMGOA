@@ -5,8 +5,8 @@
 
 <?php
 
-		
-		report();
+		process_transaction()
+		/*report();*/
 		
 		/* destroy the current session to erase customer previous purchase was moved to cart.php*/
 		//session_destroy();
