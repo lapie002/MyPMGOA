@@ -12,6 +12,10 @@ defined("TEMPLATE_FRONT") ? null : define("TEMPLATE_FRONT", __DIR__ . DS . "temp
 
 defined("TEMPLATE_BACK") ? null : define("TEMPLATE_BACK", __DIR__ . DS . "templates/back");
 
+defined("UPLOAD_DIRECTORY_NORMAL") ? null : define("UPLOAD_DIRECTORY_NORMAL", __DIR__ . DS . "uploads/normal");
+defined("UPLOAD_DIRECTORY_LARGE") ? null : define("UPLOAD_DIRECTORY_LARGE", __DIR__ . DS . "uploads/large");
+defined("UPLOAD_DIRECTORY_MEDIUM") ? null : define("UPLOAD_DIRECTORY_MEDIUM", __DIR__ . DS . "uploads/medium");
+defined("UPLOAD_DIRECTORY_SMALL") ? null : define("UPLOAD_DIRECTORY_SMALL", __DIR__ . DS . "uploads/small");
 
 
 defined("DB_HOST") ? null : define("DB_HOST","localhost");

@@ -310,17 +310,54 @@ DELIMETER;
 		echo $product_in_admin_page;
 		
 	}	
+ }
  
+  /*******************************Add products in Admin *****************/
  
+ function add_product()
+ {
  
- 
- 
- 
- 
- 
+	if(isset($_POST['publish']))
+	{
+	
+		$product_title        = escape_string($_POST['product_title']);
+		$product_category_id  = escape_string($_POST['product_category_id']);
+		$product_price        = escape_string($_POST['product_price']);
+		$product_quantity     = escape_string($_POST['product_quantity']);
+		$product_description  = escape_string($_POST['product_description']);
+		$short_desc           = escape_string($_POST['short_desc']);
+		
+		
+		$product_image        = $_FILES['file']['name'];
+		$image_temp_location  = $_FILES['file']['tmp_name'];
+		
+		$product_image_large  = $_FILES['file_large']['name'];
+		$image_large_temp_location  = $_FILES['file_large']['tmp_name'];
+		
+		$product_image_medium = $_FILES['file_medium']['name'];
+		$image_medium_temp_location  = $_FILES['file_medium']['tmp_name'];
+		
+		$product_image_small  = $_FILES['file_small']['name'];
+		$image_small_temp_location  = $_FILES['file_small']['tmp_name'];
+		
+		move_uploaded_file($image_temp_location, UPLOAD_DIRECTORY_NORMAL . DS . $product_image);
+		move_uploaded_file($image_large_temp_location, UPLOAD_DIRECTORY_LARGE . DS . $product_image_large);
+		move_uploaded_file($image_medium_temp_location, UPLOAD_DIRECTORY_MEDIUM . DS . $product_image_medium);
+		move_uploaded_file($image_small_temp_location, UPLOAD_DIRECTORY_SMALL . DS . $product_image_small);
+		
+		
+		$query = query("INSERT INTO products (product_title, product_category_id, product_price, product_quantity, product_description, short_desc ,product_image , product_image_large, product_image_medium, product_image_small) VALUES('{$product_title}', '{$product_category_id}','{$product_price}','{$product_quantity}','{$product_description}','{$short_desc}','{$product_image}','{$product_image_large}','{$product_image_medium}','{$product_image_small}')");
+		$last_id = last_id();
+		confirm($query);
+		set_message("New Product successfully added!");
+		redirect("index.php?products");
+	}
  
  
  }
+
+ 
+ 
  
  
  
