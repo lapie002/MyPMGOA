@@ -68,6 +68,8 @@ function last_id()
 } 
 
 /******************************** FRONT END FUNCTION **************************/
+
+
 //get products 
 
  function get_products()
