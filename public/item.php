@@ -23,7 +23,7 @@
 <div class="row">
 
     <div class="col-md-7">
-       <img class="img-responsive" src="<?php echo $row['product_image_large']; ?>" alt="">
+       <img class="img-responsive" width="700" height="600" src="<?php echo $row['product_image_large']; ?>" alt="">
 
     </div>
 

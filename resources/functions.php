@@ -1,4 +1,8 @@
 <?php
+/****** directory for the images *******/
+$upload_directory = "uploads";
+
+
 /******************************** helper function **************************/
 
 function redirect($location)
@@ -74,11 +78,13 @@ function last_id()
 	
 	while($row = fetch_array($result))
 	{
+		$product_image = dislay_image($row['product_image']);
+		
 		$product = <<<DELIMETER
 		<div class="col-sm-4 col-lg-4 col-md-4">
 			<div class="thumbnail">
 			<!-- actual image tag -->
-			<a href="item.php?id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
+			<a href="item.php?id={$row['product_id']}"><img width="320" height="150" src="../resources/{$product_image}" alt=""></a>
 			<!-- future image tag SUPER IMPORTANT DONT SKIP IT !!!!-->
 			<!-- <img src="/resources/...?add={$row['product_id']}" alt=""> -->
 			
@@ -129,10 +135,12 @@ echo $categories_links;
 	
 	while($row = fetch_array($query))
 	{
+		$product_image = dislay_image($row['product_image']);
+	
 		$product = <<<DELIMETER
 		     <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
+                    <a href="item.php?id={$row['product_id']}"><img width="800" height="500" src="../resources/{$product_image}" alt=""></a>
                     <div class="caption">
 						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
                         <p>{$row['short_desc']}</p>
@@ -177,10 +185,12 @@ echo $categories_title;
 	
 	while($row = fetch_array($query))
 	{
+		$product_image = dislay_image($row['product_image']);
+		
 		$product = <<<DELIMETER
 		     <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image_medium']}" alt=""></a>
+                    <a href="item.php?id={$row['product_id']}"><img width="800" height="500" src="../resources/{$product_image}" alt=""></a>
                     <div class="caption">
 						<h3><a href='item.php?id={$row['product_id']}'>{$row['product_title']}</a></h3>
                         <p>{$row['short_desc']}</p>
@@ -285,9 +295,26 @@ DELIMETER;
  
  }
  
+ function show_product_category_title($product_category_id)
+ {
+	$query = query("SELECT * FROM categories WHERE cat_id = '{$product_category_id}' ");
+	confirm($query);
+	
+	while($category_row  = fetch_array($query))
+	{
+		return $category_row['cat_title'];
+	}	
+ }
  
  /*******************************Admin products.php*****************/
+ //function for the image directory 
+ function dislay_image($picture)
+ {
+	global $upload_directory;
+	return $upload_directory . DS . $picture;
+ }
  
+
  function get_products_in_admin()
  {
 	$result = query("SELECT * FROM products");
@@ -295,13 +322,16 @@ DELIMETER;
 	
 	while($row = fetch_array($result))
 	{
+		$category = show_product_category_title($row['product_category_id']);
+		$product_image = dislay_image($row['product_image']);
+		
 		$product_in_admin_page = <<<DELIMETER
 		  <tr>
 		    <td>{$row['product_id']}</td>
             <td>{$row['product_title']} <br>
-              <a href="index.php?edit_product&id={$row['product_id']}"><img src="{$row['product_image_small']}" alt=""></a>
+              <a href="index.php?edit_product&id={$row['product_id']}"><img height="62" width="62" src="../../resources/{$product_image}" alt=""></a>
             </td>
-            <td>{$row['product_category_id']}</td>
+            <td> {$category} </td>
             <td>{$row['product_price']}</td>
 			<td>{$row['product_quantity']}</td>
 			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_product.php?id={$row['product_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -331,33 +361,37 @@ DELIMETER;
 		$product_image        = $_FILES['file']['name'];
 		$image_temp_location  = $_FILES['file']['tmp_name'];
 		
-		$product_image_large  = $_FILES['file_large']['name'];
-		$image_large_temp_location  = $_FILES['file_large']['tmp_name'];
+		move_uploaded_file($image_small_temp_location, UPLOAD_DIRECTORY_SMALL . DS . $product_image);
 		
-		$product_image_medium = $_FILES['file_medium']['name'];
-		$image_medium_temp_location  = $_FILES['file_medium']['tmp_name'];
-		
-		$product_image_small  = $_FILES['file_small']['name'];
-		$image_small_temp_location  = $_FILES['file_small']['tmp_name'];
-		
-		move_uploaded_file($image_temp_location, UPLOAD_DIRECTORY_NORMAL . DS . $product_image);
-		move_uploaded_file($image_large_temp_location, UPLOAD_DIRECTORY_LARGE . DS . $product_image_large);
-		move_uploaded_file($image_medium_temp_location, UPLOAD_DIRECTORY_MEDIUM . DS . $product_image_medium);
-		move_uploaded_file($image_small_temp_location, UPLOAD_DIRECTORY_SMALL . DS . $product_image_small);
-		
-		
-		$query = query("INSERT INTO products (product_title, product_category_id, product_price, product_quantity, product_description, short_desc ,product_image , product_image_large, product_image_medium, product_image_small) VALUES('{$product_title}', '{$product_category_id}','{$product_price}','{$product_quantity}','{$product_description}','{$short_desc}','{$product_image}','{$product_image_large}','{$product_image_medium}','{$product_image_small}')");
+		$query = query("INSERT INTO products (product_title, product_category_id, product_price, product_quantity, product_description, short_desc , product_image) VALUES('{$product_title}', '{$product_category_id}','{$product_price}','{$product_quantity}','{$product_description}','{$short_desc}','{$product_image}')");
 		$last_id = last_id();
 		confirm($query);
-		set_message("New Product successfully added!");
+		set_message("New Product with id: {$last_id} was successfully added!");
 		redirect("index.php?products");
 	}
  
  
  }
 
+
  
+function show_categories_add_product_page()
+ {
+	$query = query("SELECT * FROM categories");
+	confirm($query);
+	
+	while($row = fetch_array($query))
+	{
+		$categories_options = <<<DELIMETER
+		
+		<option value="{$row['cat_id']}">{$row['cat_title']}</option>
+		
+DELIMETER;
+echo $categories_options;
+		
+	}
  
+ }
  
  
  
