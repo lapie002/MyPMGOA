@@ -85,10 +85,12 @@
 						$sub = $row['product_price'] * $value;
 						$item_quantity += $value;
 						
+						$product_image = dislay_image($row['product_image']);
+						
 						$productInCart = <<<DELIMETER
 			
 						<tr>
-							<td>{$row['product_title']}</td>
+							<td>{$row['product_title']} <br> <img width="62" height="62" src="../resources/{$product_image}"></td>
 							<td>&#36;{$row['product_price']}</td>
 							<td>{$value}</td>
 							<td>&#36;{$sub}</td>

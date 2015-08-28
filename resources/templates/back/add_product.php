@@ -104,20 +104,7 @@
         <input type="file" name="file">
     </div>
 	
-	<div class="form-group">
-        <label for="product-title">Product Image Large</label>
-        <input type="file" name="file_large">
-    </div>
-	
-	<div class="form-group">
-        <label for="product-title">Product Image Medium</label>
-        <input type="file" name="file_medium">
-    </div>
-	
-	<div class="form-group">
-        <label for="product-title">Product Image Small</label>
-        <input type="file" name="file_small">
-    </div>
+
 
 
 
