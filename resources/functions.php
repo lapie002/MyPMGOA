@@ -450,12 +450,46 @@ function update_product()
  }
  
  
+ /********************** Categories in Admin **************************/
  
+ function show_categories_in_admin()
+ {
+	$query = "SELECT * FROM categories";
+	$category_query = query($query);
+	confirm($category_query);
+	
+	while($row = fetch_array($category_query))
+	{
+		$cat_id = $row['cat_id'];
+		$cat_title = $row['cat_title'];
+		
+		$category = <<<DELIMETER
+		
+		<tr>
+            <td>{$cat_id}</td>
+            <td>{$cat_title}</td>
+			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_category.php?id={$row['cat_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+DELIMETER;
+		
+	echo $category;
+	}
+ }
  
- 
- 
- 
- 
+ function add_category()
+ {
+	if(isset($_POST['add_category']))
+	{
+		$cat_title = escape_string($_POST['cat_title']);
+		
+		$insert_cat = query("INSERT INTO categories(cat_title) Values('{$cat_title}')");
+		confirm($insert_cat);
+		
+		if(mysql_affected_rows($insert_cat) == 0){ set_message("Nothing worked");}
+		
+		redirect("index.php?categories");
+	}
+ }
  
  
 ?>
