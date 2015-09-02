@@ -80,7 +80,7 @@ function last_id()
 	
 	while($row = fetch_array($result))
 	{
-		$product_image = dislay_image($row['product_image']);
+		$product_image = display_image($row['product_image']);
 		
 		$product = <<<DELIMETER
 		<div class="col-sm-4 col-lg-4 col-md-4">
@@ -137,7 +137,7 @@ echo $categories_links;
 	
 	while($row = fetch_array($query))
 	{
-		$product_image = dislay_image($row['product_image']);
+		$product_image = display_image($row['product_image']);
 	
 		$product = <<<DELIMETER
 		     <div class="col-md-3 col-sm-6 hero-feature">
@@ -187,7 +187,7 @@ echo $categories_title;
 	
 	while($row = fetch_array($query))
 	{
-		$product_image = dislay_image($row['product_image']);
+		$product_image = display_image($row['product_image']);
 		
 		$product = <<<DELIMETER
 		     <div class="col-md-3 col-sm-6 hero-feature">
@@ -310,7 +310,7 @@ DELIMETER;
  
  /*******************************Admin products.php*****************/
  //function for the image directory 
- function dislay_image($picture)
+ function display_image($picture)
  {
 	global $upload_directory;
 	return $upload_directory . DS . $picture;
@@ -325,7 +325,7 @@ DELIMETER;
 	while($row = fetch_array($result))
 	{
 		$category = show_product_category_title($row['product_category_id']);
-		$product_image = dislay_image($row['product_image']);
+		$product_image = display_image($row['product_image']);
 		
 		$product_in_admin_page = <<<DELIMETER
 		  <tr>
@@ -512,13 +512,14 @@ DELIMETER;
 		$username = $row['username'];
 		$email = $row['email'];
 		$password = $row['password'];
+		$profile_image = display_image($row['profile_image']);
 		
 		$users = <<<DELIMETER
 		
 		<tr>
             <td>{$user_id}</td>
             <td>{$username}</td>
-			<td><img height="62" width="62" src="https://placeholdit.imgix.net/~text?txtsize=8&txt=62%C3%9762&w=62&h=62" alt=""></td>
+			<td><img height="62" width="62" src="../../resources/{$profile_image}" alt=""></td>
 			<td>{$email}</td>
 			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_user.php?id={$row['user_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
@@ -529,18 +530,55 @@ DELIMETER;
  }
  
  
+ function add_user()
+ {
+	if(isset($_POST['add_user']))
+	{
+		$username = escape_string($_POST['username']);
+		$email = escape_string($_POST['email']);
+		$password = escape_string($_POST['password']);
+		
+		$profile_image        = $_FILES['file']['name'];
+		$image_temp_location  = $_FILES['file']['tmp_name'];
+		
+		move_uploaded_file($image_temp_location, UPLOAD_DIRECTORY . DS . $profile_image);
+		
+		$query = query("INSERT INTO users(username,email,password,profile_image) VALUES('{$username}','{$email}','{$password}','{$profile_image}')");
+		confirm($query);
+		
+		set_message("Profile created.");
+		
+		redirect("index.php?users");
+	}
+ }
  
+ /************************ show reports in Admin **********************************/
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ function get_reports()
+ {
+	$result = query("SELECT * FROM reports");
+	confirm($result);
+	
+	while($row = fetch_array($result))
+	{
+		
+		
+		$report = <<<DELIMETER
+		<tr>
+			<td>{$row['report_id']}</td>
+			<td>{$row['product_id']}</td>
+			<td>{$row['order_id']}</td>
+			<td>{$row['product_price']}</td>
+			<td>{$row['product_title']}</td>
+			<td>{$row['product_quantity']}</td>
+			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_report.php?id={$row['report_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</tr>
+		
+DELIMETER;
+		echo $report;
+	}
+ }
+
  
  
  
