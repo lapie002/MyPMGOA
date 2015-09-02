@@ -8,7 +8,7 @@
 
 <div class="col-md-4">
     
-	<h3><?php display_message(); ?></h3>
+	<h4 class="bg-success" align="center"><?php display_message(); ?></h4>
 	
     <form action="" method="post">
     

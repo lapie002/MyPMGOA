@@ -482,14 +482,66 @@ DELIMETER;
 	{
 		$cat_title = escape_string($_POST['cat_title']);
 		
-		$insert_cat = query("INSERT INTO categories(cat_title) Values('{$cat_title}')");
-		confirm($insert_cat);
-		
-		if(mysql_affected_rows($insert_cat) == 0){ set_message("Nothing worked");}
-		
-		redirect("index.php?categories");
+		if(empty($cat_title) || $cat_title == " ")
+		{
+			echo "<p class='bg-danger' align='center'>this field cannot be empty.</p>";
+		}
+		else
+		{
+			$insert_cat = query("INSERT INTO categories(cat_title) Values('{$cat_title}')");
+			confirm($insert_cat);
+
+			set_message("Category created.");
+		}
 	}
  }
+ 
+ 
+ 
+ /***************** Users in Admin section **********************/
+ 
+  function display_users()
+ {
+	$query = "SELECT * FROM users";
+	$users_query = query($query);
+	confirm($users_query);
+	
+	while($row = fetch_array($users_query))
+	{
+		$user_id = $row['user_id'];
+		$username = $row['username'];
+		$email = $row['email'];
+		$password = $row['password'];
+		
+		$users = <<<DELIMETER
+		
+		<tr>
+            <td>{$user_id}</td>
+            <td>{$username}</td>
+			<td><img height="62" width="62" src="https://placeholdit.imgix.net/~text?txtsize=8&txt=62%C3%9762&w=62&h=62" alt=""></td>
+			<td>{$email}</td>
+			<td><a class="btn btn-danger" href="../../resources/templates/back/delete_user.php?id={$row['user_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+DELIMETER;
+		
+	echo $users;
+	}
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
 ?>

@@ -8,7 +8,7 @@
 		$query = query("DELETE FROM categories WHERE cat_id = " . escape_string($_GET['id']) . " ");
 		confirm($query);
 		
-		set_message("The category selected was successfully deleted.");
+		set_message("Category deleted successfully.");
 		
 		redirect("../../../public/admin/index.php?categories");
 		
