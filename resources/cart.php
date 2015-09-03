@@ -85,7 +85,7 @@
 						$sub = $row['product_price'] * $value;
 						$item_quantity += $value;
 						
-						$product_image = dislay_image($row['product_image']);
+						$product_image = display_image($row['product_image']);
 						
 						$productInCart = <<<DELIMETER
 			
